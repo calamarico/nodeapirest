@@ -4,7 +4,7 @@ var router;
 
 exports.initRoutes = function() {
 	router.get('/', function (req, res) {
-  	res.send('Hello World!');
+  	res.send('TrendMicro Node API Rest');
 	});
 
 	router.get('/login', client.login);
