@@ -51,12 +51,12 @@ exports.login = function(socketReq, socketRes) {
 };
 
 exports.getComputerGroups = function(socketReq, socketRes) {
-	var args = {
+	var model = {
 		sID: socketReq.query.sID
 	};
 
   soap.createClient(config.soapApiServer, function(err, client) {
-      client.hostGroupRetrieveAll(args, function(err, result) {
+      client.hostGroupRetrieveAll(model, function(err, result) {
           socketRes.json(result.hostGroupRetrieveAllReturn);
       });
   });
