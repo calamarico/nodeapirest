@@ -1,7 +1,7 @@
-var express = require('express');
-var app = express();
-var routes = require('./routes.js');
-var config = require('./config.json');
+var express = require('express'),
+  app = express(),
+  routes = require('./routes.js'),
+  config = require('./config.json');
 
 app.use(routes.getRoute());
 
