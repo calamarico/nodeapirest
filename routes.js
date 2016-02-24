@@ -9,6 +9,7 @@ exports.initRoutes = function() {
 
 	router.get('/login', client.login);
 	router.get('/computers/groups', client.getComputerGroups);
+	router.get('/computers/hosts', client.getComputerHosts);
 };
 
 exports.getRoute = function() {

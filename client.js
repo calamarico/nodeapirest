@@ -61,3 +61,15 @@ exports.getComputerGroups = function(socketReq, socketRes) {
       });
   });
 };
+
+exports.getComputerHosts = function(socketReq, socketRes) {
+	var model = {
+		sID: socketReq.query.sID
+	};
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostRetrieveAll(model, function(err, result) {
+          socketRes.json(result.hostRetrieveAllReturn);
+      });
+  });
+};
