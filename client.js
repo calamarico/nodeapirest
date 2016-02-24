@@ -1,12 +1,15 @@
 var https = require('https');
+var soap = require('soap');
 var extend = require('util')._extend;
 var config = require('./config.json');
+
+// Avoids DEPTH_ZERO_SELF_SIGNED_CERT error for self-signed certs.
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var optionsRest = {
 	hostname: config.restApiServer,
   port: config.restApiServerPort,
   method: 'POST',
-  rejectUnauthorized: false,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -45,4 +48,16 @@ exports.login = function(socketReq, socketRes) {
 		}
 	}));
 	req.end();
+};
+
+exports.getComputerGroups = function(socketReq, socketRes) {
+	var args = {
+		sID: socketReq.query.sID
+	};
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostGroupRetrieveAll(args, function(err, result) {
+          socketRes.json(result.hostGroupRetrieveAllReturn);
+      });
+  });
 };
