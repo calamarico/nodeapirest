@@ -85,3 +85,21 @@ exports.getComputerHosts = function(socketReq, socketRes) {
       });
   });
 };
+
+/**
+ * Get Computer Hosts Detail using hostDetailRetrieveByName SOAP method.
+ * @exports getComputerHostsDetail
+ */
+exports.getComputerHostsDetail = function(socketReq, socketRes) {
+  var model = {
+    sID: socketReq.query.sID,
+    hostname: socketReq.query.hostname,
+    hostDetailLevel: 'HIGH'
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostDetailRetrieveByName(model, function(err, result) {
+          socketRes.json(result.hostDetailRetrieveByNameReturn);
+      });
+  });
+};
