@@ -47,8 +47,8 @@ exports.login = function(socketReq, socketRes) {
 
   req.write(JSON.stringify({
     dsCredentials: {
-      userName: socketReq.query.userName,
-      password: socketReq.query.password
+      userName: socketReq.body.userName,
+      password: socketReq.body.password
     }
   }));
   req.end();

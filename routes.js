@@ -11,7 +11,7 @@ exports.initRoutes = function() {
     res.send('TrendMicro Node API Rest');
   });
 
-  router.get('/login', client.login);
+  router.post('/login', client.login);
   router.get('/computers/groups', client.getComputerGroups);
   router.get('/computers/hosts', client.getComputerHosts);
   router.get('/computers/hosts/detail', client.getComputerHostsDetail);
