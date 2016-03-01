@@ -1,6 +1,6 @@
 {
 	"port": 3000,
-	"restApiServer": "80.28.219.84",
+	"restApiServer": "esbo-vdcm-dsm01.vdc-bo-mgt.hi.inet",
 	"restApiServerPort": 4119,
-	"soapApiServer": "https://80.28.219.84:4119/webservice/Manager?WSDL"
+	"soapApiServer": "https://esbo-vdcm-dsm01.vdc-bo-mgt.hi.inet:4119/webservice/Manager?WSDL"
 }
