@@ -61,7 +61,7 @@ exports.login = function(socketReq, socketRes) {
  */
 exports.getComputerGroups = function(socketReq, socketRes) {
   var model = {
-    sID: socketReq.query.sID
+    sID: socketReq.headers.authorization
   };
 
   soap.createClient(config.soapApiServer, function(err, client) {
@@ -77,7 +77,7 @@ exports.getComputerGroups = function(socketReq, socketRes) {
  */
 exports.getComputerHosts = function(socketReq, socketRes) {
   var model = {
-    sID: socketReq.query.sID
+    sID: socketReq.headers.authorization
   };
 
   soap.createClient(config.soapApiServer, function(err, client) {
@@ -110,7 +110,7 @@ function _getHostStatus(sID, id, deferred) {
  */
 exports.getComputerHostsDetail = function(socketReq, socketRes) {
   var model = {
-    sID: socketReq.query.sID,
+    sID: socketReq.headers.authorization,
     hostname: socketReq.query.hostname,
     hostDetailLevel: 'HIGH'
   },
