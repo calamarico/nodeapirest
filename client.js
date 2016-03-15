@@ -55,6 +55,25 @@ exports.login = function(socketReq, socketRes) {
   req.end();
 };
 
+function tenantLogin(tenantName, sID, deferred) {
+  var req = https.request(extend(optionsRest, {
+    path: '/rest/authentication/signinastenant/name/' + tenantName + '?sID=' + sID,
+    method: 'GET'
+  }), function(res) {
+      logClientRequest(res);
+      res.setEncoding('utf8');
+      
+      res.on('data', function (chunk) {
+        console.log('BODY: ' + chunk);
+        deferred.resolve(chunk);
+      });
+
+  });
+
+  req.on('error', onRequestError);
+  req.end();
+}
+
 /**
  * Performs logout delete in TrendMicro Rest API.
  * @exports logut
