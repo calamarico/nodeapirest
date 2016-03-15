@@ -56,6 +56,30 @@ exports.login = function(socketReq, socketRes) {
 };
 
 /**
+ * Performs logout delete in TrendMicro Rest API.
+ * @exports logut
+ */
+exports.logout = function(socketReq, socketRes) {
+  var req = https.request(extend(optionsRest, {
+    path: '/rest/authentication/logout?sID=' + socketReq.headers.authorization,
+    method: 'DELETE'
+  }), function(res) {
+      logClientRequest(res);
+      res.setEncoding('utf8');
+      
+      res.on('data', function (chunk) {
+        console.log('BODY: ' + chunk);
+        socketRes.status(res.statusCode);
+        socketRes.send(chunk);
+      });
+
+  });
+
+  req.on('error', onRequestError);
+  req.end();
+};
+
+/**
  * Get Computer Groups using hostGroupRetrieveAll SOAP method.
  * @exports getComputerGroups
  */
