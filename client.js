@@ -111,17 +111,22 @@ function _getHostStatus(sID, id, deferred) {
 exports.getComputerHostsDetail = function(socketReq, socketRes) {
   var model = {
     sID: socketReq.headers.authorization,
-    hostname: socketReq.query.hostname,
-    hostDetailLevel: 'HIGH'
+    hostDetailLevel: 'HIGH',
+    hostFilter: {
+      hostID: socketReq.query.hostID,
+      hostGroupID: 0,
+      securityProfileID: 0,
+      type: 'SPECIFIC_HOST'
+    }
   },
     deferred = Q.defer();
 
   soap.createClient(config.soapApiServer, function(err, client) {
-      client.hostDetailRetrieveByName(model, function(err, result) {
-        _getHostStatus(model.sID, result.hostDetailRetrieveByNameReturn[0].ID, deferred);
+      client.hostDetailRetrieve(model, function(err, result) {
+        _getHostStatus(model.sID, socketReq.query.hostID, deferred);
         deferred.promise.then(function(_result) {
           socketRes.json([extend(
-            result.hostDetailRetrieveByNameReturn[0], _result.hostGetStatusReturn)]);
+            result.hostDetailRetrieveReturn[0], _result.hostGetStatusReturn)]);
         });
       });
   });
