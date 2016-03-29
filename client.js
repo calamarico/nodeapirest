@@ -10,7 +10,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var optionsRest = {
   hostname: config.restApiServer,
   port: config.restApiServerPort,
-  method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -30,16 +29,38 @@ function logClientRequest(res) {
  * @exports login
  */
 exports.login = function(socketReq, socketRes) {
-  var req = https.request(extend(optionsRest, {
-    path: '/rest/authentication/login'
-  }), function(res) {
+  var req = https.request(Object.assign({
+    path: '/rest/authentication/login',
+    method: 'POST'
+  }, optionsRest), function(res) {
       logClientRequest(res);
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
+        var deferred; 
         console.log('BODY: ' + chunk);
-        socketRes.status(res.statusCode);
-        socketRes.send(chunk);
+        
+        if (socketReq.body.tenantName) {
+          deferred = Q.defer();
+          deferred.promise.then(
+            function(result) {
+              socketRes.status(res.statusCode);
+              socketRes.send({
+                sID: chunk,
+                tenantSID: result
+              });
+            },
+            function(error) {
+              console.log(error);
+            }
+          );
+          tenantLogin(socketReq.body.tenantName, chunk, deferred);
+        } else {
+          socketRes.status(res.statusCode);
+          socketRes.send({
+            sID: chunk
+          });
+        }
       });
 
   });
@@ -56,10 +77,10 @@ exports.login = function(socketReq, socketRes) {
 };
 
 function tenantLogin(tenantName, sID, deferred) {
-  var req = https.request(extend(optionsRest, {
+  var req = https.request(Object.assign({
     path: '/rest/authentication/signinastenant/name/' + tenantName + '?sID=' + sID,
     method: 'GET'
-  }), function(res) {
+  }, optionsRest), function(res) {
       logClientRequest(res);
       res.setEncoding('utf8');
       
