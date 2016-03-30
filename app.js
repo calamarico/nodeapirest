@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(routes.getRoute());
 
 app.listen(config.port, function () {
-  console.log('Trend Micro node BE listening on port ' + config.port);
+  logger.getLogger().info('Trend Micro node BE listening on port ' + config.port);
 });
 
 routes.initRoutes();
