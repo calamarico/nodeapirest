@@ -27,10 +27,6 @@
 
     "globals": {
         "$APP": false,
-        "i18n": false,
-        "angular": false,
-        "expect": true,
-        "PIOTP": true,
         "_": true
     }
 }
