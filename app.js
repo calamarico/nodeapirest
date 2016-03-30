@@ -8,8 +8,7 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   logger = require('./logger.js'),
   routes = require('./routes.js'),
-  config = require('./config.json'),
-  logger;
+  config = require('./config.json');
 
 app.use(logger.connectLogger());
 app.use(bodyParser.json());
