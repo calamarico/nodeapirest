@@ -1,3 +1,8 @@
+/**
+ * Main App.
+ * @module app
+ */
+
 var express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),

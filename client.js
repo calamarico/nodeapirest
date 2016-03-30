@@ -1,3 +1,8 @@
+/**
+ * Client module.
+ * @module client
+ */
+
 var https = require('https'),
   soap = require('soap'),
   extend = require('util')._extend,
@@ -28,11 +33,13 @@ exports.login = function(socketReq, socketRes) {
   var req = https.request(Object.assign({
     path: '/rest/authentication/login',
     method: 'POST'
-  }, optionsRest), function(res) {
+  }, optionsRest),
+    function(res) {
       res.setEncoding('utf8');
+
       res.on('data', function (chunk) {
         var deferred; 
-        
+
         if (socketReq.body.tenantName) {
           deferred = Q.defer();
           deferred.promise.then(
@@ -53,8 +60,8 @@ exports.login = function(socketReq, socketRes) {
           });
         }
       });
-
-  });
+    }
+  );
 
   req.on('error', onRequestError);
 
@@ -71,14 +78,16 @@ function tenantLogin(tenantName, sID, deferred) {
   var req = https.request(Object.assign({
     path: '/rest/authentication/signinastenant/name/' + tenantName + '?sID=' + sID,
     method: 'GET'
-  }, optionsRest), function(res) {
+  }, optionsRest),
+    function(res) {
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
         deferred.resolve(chunk);
       });
 
-  });
+    }
+  );
 
   req.on('error', onRequestError);
   req.end();
@@ -160,17 +169,17 @@ function _getHostStatus(sID, id, deferred) {
  * @exports getComputerHostsDetail
  */
 exports.getComputerHostsDetail = function(socketReq, socketRes) {
-  var model = {
-    sID: socketReq.headers.authorization,
-    hostDetailLevel: 'HIGH',
-    hostFilter: {
-      hostID: socketReq.query.hostID,
-      hostGroupID: 0,
-      securityProfileID: 0,
-      type: 'SPECIFIC_HOST'
-    }
-  },
-    deferred = Q.defer();
+  var deferred = Q.defer(),
+    model = {
+      sID: socketReq.headers.authorization,
+      hostDetailLevel: 'HIGH',
+      hostFilter: {
+        hostID: socketReq.query.hostID,
+        hostGroupID: 0,
+        securityProfileID: 0,
+        type: 'SPECIFIC_HOST'
+      }
+    };
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostDetailRetrieve(model, function(err, result) {

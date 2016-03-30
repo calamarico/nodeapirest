@@ -1,3 +1,8 @@
+/**
+ * Routes module.
+ * @module routes
+ */
+
 var express = require('express'),
   client = require('./client.js'),
   router;
