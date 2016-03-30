@@ -2,7 +2,8 @@ var https = require('https'),
   soap = require('soap'),
   extend = require('util')._extend,
   Q = require('q'),
-  config = require('./config.json');
+  config = require('./config.json'),
+  logger = require('./logger.js').getLogger();
 
 // Avoids DEPTH_ZERO_SELF_SIGNED_CERT error for self-signed certs.
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -16,12 +17,7 @@ var optionsRest = {
 };
 
 function onRequestError(error) {
-  console.log(error);
-}
-
-function logClientRequest(res) {
-  console.log('STATUS: ' + res.statusCode);
-  console.log('HEADERS: ' + JSON.stringify(res.headers));
+  logger.error(error);
 }
 
 /**
@@ -33,12 +29,9 @@ exports.login = function(socketReq, socketRes) {
     path: '/rest/authentication/login',
     method: 'POST'
   }, optionsRest), function(res) {
-      logClientRequest(res);
       res.setEncoding('utf8');
-      
       res.on('data', function (chunk) {
         var deferred; 
-        console.log('BODY: ' + chunk);
         
         if (socketReq.body.tenantName) {
           deferred = Q.defer();
@@ -50,9 +43,7 @@ exports.login = function(socketReq, socketRes) {
                 tenantSID: result
               });
             },
-            function(error) {
-              console.log(error);
-            }
+            onRequestError
           );
           tenantLogin(socketReq.body.tenantName, chunk, deferred);
         } else {
@@ -81,11 +72,9 @@ function tenantLogin(tenantName, sID, deferred) {
     path: '/rest/authentication/signinastenant/name/' + tenantName + '?sID=' + sID,
     method: 'GET'
   }, optionsRest), function(res) {
-      logClientRequest(res);
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk);
         deferred.resolve(chunk);
       });
 
@@ -104,11 +93,9 @@ exports.logout = function(socketReq, socketRes) {
     path: '/rest/authentication/logout?sID=' + socketReq.headers.authorization,
     method: 'DELETE'
   }), function(res) {
-      logClientRequest(res);
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
-        console.log('BODY: ' + chunk);
         socketRes.status(res.statusCode);
         socketRes.send(chunk);
       });
