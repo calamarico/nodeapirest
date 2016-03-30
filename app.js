@@ -16,10 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false 
 }));
-app.use(routes.getRoute());
+app.use(routes);
 
 app.listen(config.port, function () {
   logger.getLogger().info('Trend Micro node BE listening on port ' + config.port);
 });
-
-routes.initRoutes();
