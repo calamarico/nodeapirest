@@ -27,7 +27,6 @@ function onRequestError(error) {
 
 /**
  * Performs login post in TrendMicro Rest API.
- * @exports login
  */
 exports.login = function(socketReq, socketRes) {
   var req = https.request(Object.assign({
@@ -74,6 +73,9 @@ exports.login = function(socketReq, socketRes) {
   req.end();
 };
 
+/**
+ * Performs get to siginastenant resource to get tenantsessionid.
+ */
 function tenantLogin(tenantName, sID, deferred) {
   var req = https.request(Object.assign({
     path: '/rest/authentication/signinastenant/name/' + tenantName + '?sID=' + sID,
@@ -95,7 +97,6 @@ function tenantLogin(tenantName, sID, deferred) {
 
 /**
  * Performs logout delete in TrendMicro Rest API.
- * @exports logut
  */
 exports.logout = function(socketReq, socketRes) {
   var req = https.request(extend(optionsRest, {
@@ -117,7 +118,6 @@ exports.logout = function(socketReq, socketRes) {
 
 /**
  * Get Computer Groups using hostGroupRetrieveAll SOAP method.
- * @exports getComputerGroups
  */
 exports.getComputerGroups = function(socketReq, socketRes) {
   var model = {
@@ -133,7 +133,6 @@ exports.getComputerGroups = function(socketReq, socketRes) {
 
 /**
  * Get Computer Hosts using hostRetrieveAll SOAP method.
- * @exports getComputerHosts
  */
 exports.getComputerHosts = function(socketReq, socketRes) {
   var model = {
@@ -149,7 +148,6 @@ exports.getComputerHosts = function(socketReq, socketRes) {
 
 /**
  * Get Hosts Status using hostGetStatus SOAP method.
- * @exports _getHostStatus
  */
 function _getHostStatus(sID, id, deferred) {
   var model = {
@@ -166,7 +164,6 @@ function _getHostStatus(sID, id, deferred) {
 
 /**
  * Get Computer Hosts Detail using hostDetailRetrieveByName SOAP method.
- * @exports getComputerHostsDetail
  */
 exports.getComputerHostsDetail = function(socketReq, socketRes) {
   var deferred = Q.defer(),

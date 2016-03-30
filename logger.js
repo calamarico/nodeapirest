@@ -15,10 +15,16 @@ log4js.configure({
 logger = log4js.getLogger('dev');
 logger.setLevel('INFO');
 
+/**
+ * Returns logger instance.
+ */
 exports.getLogger = function() {
   return logger;
 };
 
+/**
+ * Returns log4js middleware function to be used in app.use().
+ */
 exports.connectLogger = function() {
   return log4js.connectLogger(logger, {level: log4js.levels.INFO});
 };

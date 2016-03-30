@@ -9,7 +9,6 @@ var express = require('express'),
 
 /**
  * Initializes Routes.
- * @exports initRoutes
  */
 exports.initRoutes = function() {
   router.get('/', function (req, res) {
@@ -25,7 +24,6 @@ exports.initRoutes = function() {
 
 /**
  * Creates and returns express router.
- * @exports getRoute
  */
 exports.getRoute = function() {
   router = router || express.Router();
