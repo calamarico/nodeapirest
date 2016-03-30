@@ -27,6 +27,8 @@ function onRequestError(error) {
 
 /**
  * Performs login post in TrendMicro Rest API.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
  */
 exports.login = function(socketReq, socketRes) {
   var req = https.request(Object.assign({
@@ -75,6 +77,9 @@ exports.login = function(socketReq, socketRes) {
 
 /**
  * Performs get to siginastenant resource to get tenantsessionid.
+ * @param {String} tenantName - Name of tenant to login.
+ * @param {String} sID - User session id.
+ * @param {Object} deferred - Q deferred object.
  */
 function tenantLogin(tenantName, sID, deferred) {
   var req = https.request(Object.assign({
@@ -97,6 +102,8 @@ function tenantLogin(tenantName, sID, deferred) {
 
 /**
  * Performs logout delete in TrendMicro Rest API.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
  */
 exports.logout = function(socketReq, socketRes) {
   var req = https.request(extend(optionsRest, {
@@ -118,6 +125,8 @@ exports.logout = function(socketReq, socketRes) {
 
 /**
  * Get Computer Groups using hostGroupRetrieveAll SOAP method.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
  */
 exports.getComputerGroups = function(socketReq, socketRes) {
   var model = {
@@ -133,6 +142,8 @@ exports.getComputerGroups = function(socketReq, socketRes) {
 
 /**
  * Get Computer Hosts using hostRetrieveAll SOAP method.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
  */
 exports.getComputerHosts = function(socketReq, socketRes) {
   var model = {
@@ -148,6 +159,9 @@ exports.getComputerHosts = function(socketReq, socketRes) {
 
 /**
  * Get Hosts Status using hostGetStatus SOAP method.
+ * @param {String} sID - Session id.
+ * @param {Number} id - Host id.
+ * @param {Object} deferred - Q deferred object.
  */
 function _getHostStatus(sID, id, deferred) {
   var model = {
@@ -164,6 +178,8 @@ function _getHostStatus(sID, id, deferred) {
 
 /**
  * Get Computer Hosts Detail using hostDetailRetrieveByName SOAP method.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
  */
 exports.getComputerHostsDetail = function(socketReq, socketRes) {
   var deferred = Q.defer(),
