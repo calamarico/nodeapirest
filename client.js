@@ -30,7 +30,7 @@ function onRequestError(error) {
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
-exports.login = function(socketReq, socketRes) {
+exports.login = function(socketReq, socketRes, next) {
   var req = https.request(Object.assign({
     path: '/rest/authentication/login',
     method: 'POST'
@@ -40,6 +40,12 @@ exports.login = function(socketReq, socketRes) {
 
       res.on('data', function (chunk) {
         var deferred; 
+
+        if (res.statusCode !== 200) {
+          return next({
+            statusCode: res.statusCode
+          });
+        }
 
         if (socketReq.body.tenantName) {
           deferred = Q.defer();
