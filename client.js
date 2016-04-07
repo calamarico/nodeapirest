@@ -141,7 +141,9 @@ exports.getComputerGroups = function(socketReq, socketRes) {
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostGroupRetrieveAll(model, function(err, result) {
-        socketRes.json(result.hostGroupRetrieveAllReturn);
+        socketRes.json(result ?
+          result.hostGroupRetrieveAllReturn :
+          []);
       });
   });
 };
@@ -158,7 +160,9 @@ exports.getComputerHosts = function(socketReq, socketRes) {
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostRetrieveAll(model, function(err, result) {
-        socketRes.json(result.hostRetrieveAllReturn);
+        socketRes.json(result ?
+          result.hostRetrieveAllReturn :
+          []);
       });
   });
 };
