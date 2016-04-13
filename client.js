@@ -230,7 +230,7 @@ exports.getUser = function(socketReq, socketRes) {
       client.userRetrieveByName(model, function(err, result) {
         socketRes.json(result ?
           result.userRetrieveByNameReturn :
-          []);
+          {});
       });
   });
 };
