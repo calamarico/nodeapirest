@@ -220,14 +220,19 @@ exports.getComputerHostsDetail = function(socketReq, socketRes) {
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
-exports.getUser = function(socketReq, socketRes) {
-    model = {
-      sID: socketReq.headers.authorization,
-      name: socketReq.query.name
-    };
+exports.getUser = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    name: socketReq.query.name
+  };
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.userRetrieveByName(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: err.response.statusCode
+          });
+        }
         socketRes.json(result ?
           result.userRetrieveByNameReturn :
           {});
