@@ -17,5 +17,6 @@ router.route('/login')
 router.get('/computers/groups', client.getComputerGroups);
 router.get('/computers/hosts', client.getComputerHosts);
 router.get('/computers/hosts/detail', client.getComputerHostsDetail);
+router.get('/user', client.getUser);
 
 module.exports = router;

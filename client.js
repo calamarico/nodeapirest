@@ -214,3 +214,23 @@ exports.getComputerHostsDetail = function(socketReq, socketRes) {
       });
   });
 };
+
+/**
+ * Get User details.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.getUser = function(socketReq, socketRes) {
+    model = {
+      sID: socketReq.headers.authorization,
+      name: socketReq.query.name
+    };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.userRetrieveByName(model, function(err, result) {
+        socketRes.json(result ?
+          result.userRetrieveByNameReturn :
+          []);
+      });
+  });
+};
