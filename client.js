@@ -134,13 +134,19 @@ exports.logout = function(socketReq, socketRes) {
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
-exports.getComputerGroups = function(socketReq, socketRes) {
+exports.getComputerGroups = function(socketReq, socketRes, next) {
   var model = {
     sID: socketReq.headers.authorization
   };
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostGroupRetrieveAll(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: err.response.statusCode
+          });
+        }
+
         socketRes.json(result ?
           result.hostGroupRetrieveAllReturn :
           []);
@@ -153,13 +159,19 @@ exports.getComputerGroups = function(socketReq, socketRes) {
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
-exports.getComputerHosts = function(socketReq, socketRes) {
+exports.getComputerHosts = function(socketReq, socketRes, next) {
   var model = {
     sID: socketReq.headers.authorization
   };
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostRetrieveAll(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: err.response.statusCode
+          });
+        }
+
         socketRes.json(result ?
           result.hostRetrieveAllReturn :
           []);
@@ -191,7 +203,7 @@ function _getHostStatus(sID, id, deferred) {
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
-exports.getComputerHostsDetail = function(socketReq, socketRes) {
+exports.getComputerHostsDetail = function(socketReq, socketRes, next) {
   var deferred = Q.defer(),
     model = {
       sID: socketReq.headers.authorization,
@@ -206,6 +218,12 @@ exports.getComputerHostsDetail = function(socketReq, socketRes) {
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostDetailRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: err.response.statusCode
+          });
+        }
+
         _getHostStatus(model.sID, socketReq.query.hostID, deferred);
         deferred.promise.then(function(_result) {
           socketRes.json([extend(
@@ -233,6 +251,7 @@ exports.getUser = function(socketReq, socketRes, next) {
             statusCode: err.response.statusCode
           });
         }
+
         socketRes.json(result ?
           result.userRetrieveByNameReturn :
           {});
