@@ -112,10 +112,11 @@ function tenantLogin(tenantName, sID, deferred) {
  * @param {Object} socketRes - Socket Response.
  */
 exports.logout = function(socketReq, socketRes) {
-  var req = https.request(extend(optionsRest, {
-    path: '/rest/authentication/logout?sID=' + socketReq.headers.authorization,
-    method: 'DELETE'
-  }), function(res) {
+  var req = https.request(Object.assign({
+      path: '/rest/authentication/logout?sID=' + socketReq.headers.authorization,
+      method: 'DELETE'
+    }, optionsRest),
+    function(res) {
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
