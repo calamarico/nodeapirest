@@ -163,7 +163,9 @@ exports.getComputerGroups = function(socketReq, socketRes, next) {
       client.hostGroupRetrieveAll(model, function(err, result) {
         if (err) {
           return next({
-            statusCode: err.response.statusCode
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
           });
         }
 
@@ -189,7 +191,9 @@ exports.getComputerHosts = function(socketReq, socketRes, next) {
       client.hostRetrieveAll(model, function(err, result) {
         if (err) {
           return next({
-            statusCode: err.response.statusCode
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
           });
         }
 
@@ -243,7 +247,9 @@ exports.getComputerHostsDetail = function(socketReq, socketRes, next) {
       client.hostDetailRetrieve(model, function(err, result) {
         if (err) {
           return next({
-            statusCode: err.response.statusCode
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
           });
         }
 
@@ -272,7 +278,9 @@ exports.getUser = function(socketReq, socketRes, next) {
       client.userRetrieveByName(model, function(err, result) {
         if (err) {
           return next({
-            statusCode: err.response.statusCode
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
           });
         }
 
