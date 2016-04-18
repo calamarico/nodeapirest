@@ -26,12 +26,18 @@ function onRequestError(error) {
 }
 
 function logClientRestRequest(response) {
-  logger.debug('Internal ' +
+  logger.debug('Internal REST request: ' +
       response.req.method + ' ' +
       optionsRest.hostname + ':' +
       optionsRest.port + '/' +
       response.req.path +
       ' StatusCode:' + response.statusCode);
+}
+
+function logClientSoapRequest(result) {
+  var method = Object.keys(result)[0].split('Return')[0];
+  logger.debug('Internal SOAP request: ' +
+      method + ' SUCCESS');
 }
 
 /**
@@ -161,6 +167,7 @@ exports.getComputerGroups = function(socketReq, socketRes, next) {
           });
         }
 
+        result && logClientSoapRequest(result);
         socketRes.json(result ?
           result.hostGroupRetrieveAllReturn :
           []);
@@ -186,6 +193,7 @@ exports.getComputerHosts = function(socketReq, socketRes, next) {
           });
         }
 
+        result && logClientSoapRequest(result);
         socketRes.json(result ?
           result.hostRetrieveAllReturn :
           []);
@@ -207,6 +215,7 @@ function _getHostStatus(sID, id, deferred) {
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.hostGetStatus(model, function(err, result) {
+        result && logClientSoapRequest(result);
         deferred.resolve(result);
       });
   });
@@ -238,6 +247,7 @@ exports.getComputerHostsDetail = function(socketReq, socketRes, next) {
           });
         }
 
+        result && logClientSoapRequest(result);
         _getHostStatus(model.sID, socketReq.query.hostID, deferred);
         deferred.promise.then(function(_result) {
           socketRes.json([extend(
@@ -266,6 +276,7 @@ exports.getUser = function(socketReq, socketRes, next) {
           });
         }
 
+        result && logClientSoapRequest(result);
         socketRes.json(result ?
           result.userRetrieveByNameReturn :
           {});
