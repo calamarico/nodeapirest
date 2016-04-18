@@ -25,6 +25,15 @@ function onRequestError(error) {
   logger.error(error);
 }
 
+function logClientRestRequest(response) {
+  logger.debug('Internal ' +
+      response.req.method + ' ' +
+      optionsRest.hostname + ':' +
+      optionsRest.port + '/' +
+      response.req.path +
+      ' StatusCode:' + response.statusCode);
+}
+
 /**
  * Performs login post in TrendMicro Rest API.
  * @param {Object} socketReq - Socket Request.
@@ -39,7 +48,9 @@ exports.login = function(socketReq, socketRes, next) {
       res.setEncoding('utf8');
 
       res.on('data', function (chunk) {
-        var deferred; 
+        var deferred;
+
+        logClientRestRequest(res);
 
         if (res.statusCode !== 200) {
           return next({
@@ -96,6 +107,7 @@ function tenantLogin(tenantName, sID, deferred) {
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
+        logClientRestRequest(res);
         deferred.resolve(chunk);
       });
 
@@ -120,6 +132,7 @@ exports.logout = function(socketReq, socketRes) {
       res.setEncoding('utf8');
       
       res.on('data', function (chunk) {
+        logClientRestRequest(res);
         socketRes.status(res.statusCode);
         socketRes.send(chunk);
       });

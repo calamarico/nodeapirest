@@ -13,7 +13,7 @@ log4js.configure({
 });
 
 logger = log4js.getLogger('dev');
-logger.setLevel('INFO');
+logger.setLevel('DEBUG');
 
 /**
  * Returns logger instance.
