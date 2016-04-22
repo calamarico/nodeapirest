@@ -26,5 +26,5 @@ exports.getLogger = function() {
  * Returns log4js middleware function to be used in app.use().
  */
 exports.connectLogger = function() {
-  return log4js.connectLogger(logger, {level: log4js.levels.INFO});
+  return log4js.connectLogger(logger, {level: log4js.levels.DEBUG});
 };
