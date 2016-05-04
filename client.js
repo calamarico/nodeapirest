@@ -291,3 +291,32 @@ exports.getUser = function(socketReq, socketRes, next) {
       });
   });
 };
+
+/**
+ * Clear Warnings/Errors in host.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.clear = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostIDs: socketReq.query.id
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostClearWarningsErrors(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.hostClearWarningsErrors :
+          {});
+      });
+  });
+};
