@@ -19,5 +19,10 @@ router.get('/computers/hosts', client.getComputerHosts);
 router.get('/computers/hosts/detail', client.getComputerHostsDetail);
 router.get('/user', client.getUser);
 router.get('/computers/actions/clear', client.clear);
+router.get('/computers/actions/deactivate', client.deactivate);
+router.get('/computers/actions/recomscan', client.recommendationScan);
+router.get('/computers/actions/malwarescan', client.antimalwareScan);
+router.get('/computers/actions/integrityscan', client.integrityScan);
+router.get('/computers/actions/rebuildbaseline', client.rebuildBaseline);
 
 module.exports = router;

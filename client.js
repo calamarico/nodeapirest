@@ -315,8 +315,149 @@ exports.clear = function(socketReq, socketRes, next) {
 
         result && logClientSoapRequest(result);
         socketRes.json(result ?
-          result.hostClearWarningsErrors :
+          result.hostClearWarningsErrorsReturn :
           {});
       });
   });
 };
+
+/**
+ * Deactivate host agent.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.deactivate = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostIDs: socketReq.query.id
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostAgentDeactivate(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.hostAgentDeactivateReturn :
+          {});
+      });
+  });
+};
+
+/**
+ * Recommendation host scan.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.recommendationScan = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostIDs: socketReq.query.id
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostRecommendationScan(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.hostRecommendationScanReturn :
+          {});
+      });
+  });
+};
+
+/**
+ * Anti Malware Scan.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.antimalwareScan = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostIDs: socketReq.query.id
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostAntiMalwareScan(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.hostAntiMalwareScanReturn :
+          {});
+      });
+  });
+};
+
+/**
+ * Integrity Scan.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.integrityScan = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostIDs: socketReq.query.id
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostIntegrityScan(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.hostIntegrityScanReturn :
+          {});
+      });
+  });
+};
+
+exports.rebuildBaseline = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostIDs: socketReq.query.id
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.hostRebuildBaseline(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.hostRebuildBaselineReturn :
+          {});
+      });
+  });
+};
+
