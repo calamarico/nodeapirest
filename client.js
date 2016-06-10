@@ -437,6 +437,11 @@ exports.integrityScan = function(socketReq, socketRes, next) {
   });
 };
 
+/**
+ * Rebuilds Baseline.
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
 exports.rebuildBaseline = function(socketReq, socketRes, next) {
   var model = {
     sID: socketReq.headers.authorization,
@@ -461,3 +466,34 @@ exports.rebuildBaseline = function(socketReq, socketRes, next) {
   });
 };
 
+/**
+ * Gets system events of all groups (and subgroups).
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.systemEventRetrieve = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    includeNonHostEvents: false,
+    hostFilter: {
+      type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
+    }
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.systemEventRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.systemEventRetrieveReturn :
+          {});
+      });
+  });
+};

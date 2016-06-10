@@ -24,5 +24,6 @@ router.get('/computers/actions/recomscan', client.recommendationScan);
 router.get('/computers/actions/malwarescan', client.antimalwareScan);
 router.get('/computers/actions/integrityscan', client.integrityScan);
 router.get('/computers/actions/rebuildbaseline', client.rebuildBaseline);
+router.get('/events', client.systemEventRetrieve);
 
 module.exports = router;
