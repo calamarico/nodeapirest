@@ -28,5 +28,7 @@ router.get('/events/system', client.systemEventRetrieve);
 router.get('/events/webreputation', client.webReputationEventRetrieve);
 router.get('/events/antimalware', client.antiMalwareEventRetrieve);
 router.get('/events/loginspection', client.logInspectionEventRetrieve);
+router.get('/events/integrity', client.integrityEventRetrieve);
+router.get('/events/dpi', client.intrusionEventRetrieve);
 
 module.exports = router;

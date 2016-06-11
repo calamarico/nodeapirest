@@ -590,3 +590,96 @@ exports.logInspectionEventRetrieve = function(socketReq, socketRes, next) {
       });
   });
 };
+
+/**
+ * Gets Intergrity monitoring events of all groups (and subgroups).
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.integrityEventRetrieve = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostFilter: {
+      type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
+    }
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.integrityEventRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.integrityEventRetrieveReturn :
+          {});
+      });
+  });
+};
+
+/**
+ * Gets Intrusion prevention events of all groups (and subgroups).
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.intrusionEventRetrieve = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostFilter: {
+      type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
+    }
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.DPIEventRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.DPIEventRetrieveReturn :
+          {});
+      });
+  });
+};
+
+/**
+ * Gets Firewall events of all groups (and subgroups).
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.firewallEventRetrieve = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostFilter: {
+      type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
+    }
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.firewallEventRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.firewallEventRetrieveReturn :
+          {});
+      });
+  });
+};
