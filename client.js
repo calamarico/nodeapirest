@@ -559,3 +559,34 @@ exports.antiMalwareEventRetrieve = function(socketReq, socketRes, next) {
       });
   });
 };
+
+/**
+ * Gets Log inspection events of all groups (and subgroups).
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.logInspectionEventRetrieve = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostFilter: {
+      type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
+    }
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.logInspectionEventRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.logInspectionEventRetrieveReturn :
+          {});
+      });
+  });
+};
