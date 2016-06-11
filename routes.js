@@ -26,5 +26,6 @@ router.get('/computers/actions/integrityscan', client.integrityScan);
 router.get('/computers/actions/rebuildbaseline', client.rebuildBaseline);
 router.get('/events/system', client.systemEventRetrieve);
 router.get('/events/webreputation', client.webReputationEventRetrieve);
+router.get('/events/antimalware', client.antiMalwareEventRetrieve);
 
 module.exports = router;

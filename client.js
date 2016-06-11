@@ -467,7 +467,7 @@ exports.rebuildBaseline = function(socketReq, socketRes, next) {
 };
 
 /**
- * Gets system events of all groups (and subgroups).
+ * Gets System events of all groups (and subgroups).
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
@@ -499,7 +499,7 @@ exports.systemEventRetrieve = function(socketReq, socketRes, next) {
 };
 
 /**
- * Gets web reputation events of all groups (and subgroups).
+ * Gets Web reputation events of all groups (and subgroups).
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
  */
@@ -524,6 +524,37 @@ exports.webReputationEventRetrieve = function(socketReq, socketRes, next) {
         result && logClientSoapRequest(result);
         socketRes.json(result ?
           result.webReputationEventRetrieveReturn :
+          {});
+      });
+  });
+};
+
+/**
+ * Gets Anti malware events of all groups (and subgroups).
+ * @param {Object} socketReq - Socket Request.
+ * @param {Object} socketRes - Socket Response.
+ */
+exports.antiMalwareEventRetrieve = function(socketReq, socketRes, next) {
+  var model = {
+    sID: socketReq.headers.authorization,
+    hostFilter: {
+      type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
+    }
+  };
+
+  soap.createClient(config.soapApiServer, function(err, client) {
+      client.antiMalwareEventRetrieve(model, function(err, result) {
+        if (err) {
+          return next({
+            statusCode: (err && err.response) ? 
+              err.response.statusCode :
+              503
+          });
+        }
+
+        result && logClientSoapRequest(result);
+        socketRes.json(result ?
+          result.antiMalwareEventRetrieveReturn :
           {});
       });
   });
