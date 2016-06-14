@@ -480,7 +480,7 @@ exports.systemEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
@@ -515,7 +515,7 @@ exports.webReputationEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
@@ -550,7 +550,7 @@ exports.antiMalwareEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
@@ -585,7 +585,7 @@ exports.logInspectionEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
@@ -620,7 +620,7 @@ exports.integrityEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
@@ -655,7 +655,7 @@ exports.intrusionEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
@@ -690,7 +690,7 @@ exports.firewallEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.hostFilter = {
+  !!socketReq.query.period && (model.timeFilter = {
     type: socketReq.query.period
   });
 
