@@ -480,6 +480,10 @@ exports.systemEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
+
   soap.createClient(config.soapApiServer, function(err, client) {
       client.systemEventRetrieve(model, function(err, result) {
         if (err) {
@@ -510,6 +514,10 @@ exports.webReputationEventRetrieve = function(socketReq, socketRes, next) {
       type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
     }
   };
+
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.webReputationEventRetrieve(model, function(err, result) {
@@ -542,6 +550,10 @@ exports.antiMalwareEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
+
   soap.createClient(config.soapApiServer, function(err, client) {
       client.antiMalwareEventRetrieve(model, function(err, result) {
         if (err) {
@@ -572,6 +584,10 @@ exports.logInspectionEventRetrieve = function(socketReq, socketRes, next) {
       type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
     }
   };
+
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.logInspectionEventRetrieve(model, function(err, result) {
@@ -604,6 +620,10 @@ exports.integrityEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
+
   soap.createClient(config.soapApiServer, function(err, client) {
       client.integrityEventRetrieve(model, function(err, result) {
         if (err) {
@@ -635,6 +655,10 @@ exports.intrusionEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
+
   soap.createClient(config.soapApiServer, function(err, client) {
       client.DPIEventRetrieve(model, function(err, result) {
         if (err) {
@@ -665,6 +689,10 @@ exports.firewallEventRetrieve = function(socketReq, socketRes, next) {
       type: 'HOSTS_IN_GROUP_AND_ALL_SUBGROUPS'
     }
   };
+
+  !!socketReq.query.period && (model.hostFilter = {
+    type: socketReq.query.period
+  });
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.firewallEventRetrieve(model, function(err, result) {
