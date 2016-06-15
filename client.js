@@ -480,9 +480,16 @@ exports.systemEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.systemEventRetrieve(model, function(err, result) {
@@ -515,9 +522,16 @@ exports.webReputationEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.webReputationEventRetrieve(model, function(err, result) {
@@ -550,9 +564,16 @@ exports.antiMalwareEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.antiMalwareEventRetrieve(model, function(err, result) {
@@ -585,9 +606,16 @@ exports.logInspectionEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.logInspectionEventRetrieve(model, function(err, result) {
@@ -620,9 +648,16 @@ exports.integrityEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.integrityEventRetrieve(model, function(err, result) {
@@ -655,9 +690,16 @@ exports.intrusionEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.DPIEventRetrieve(model, function(err, result) {
@@ -690,9 +732,16 @@ exports.firewallEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
-  !!socketReq.query.period && (model.timeFilter = {
-    type: socketReq.query.period
-  });
+  if (socketReq.query.period) {
+      model.timeFilter = {
+        type: socketReq.query.period
+      };
+
+      if (socketReq.query.period === 'CUSTOM_RANGE') {
+        model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
+        model.timeFilter.rangeTo = socketReq.query.rangeTo;
+      }
+  }
 
   soap.createClient(config.soapApiServer, function(err, client) {
       client.firewallEventRetrieve(model, function(err, result) {
