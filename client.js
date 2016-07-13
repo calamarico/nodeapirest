@@ -485,9 +485,10 @@ exports.systemEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
@@ -527,9 +528,10 @@ exports.webReputationEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
@@ -569,9 +571,10 @@ exports.antiMalwareEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
@@ -611,9 +614,10 @@ exports.logInspectionEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
@@ -653,9 +657,10 @@ exports.integrityEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
@@ -695,9 +700,10 @@ exports.intrusionEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
@@ -737,9 +743,10 @@ exports.firewallEventRetrieve = function(socketReq, socketRes, next) {
         type: socketReq.query.period
       };
 
-      if (socketReq.query.period === 'CUSTOM_RANGE') {
+      if (socketReq.query.period === 'LAST_6_MONTHS' || socketReq.query.period === 'LAST_1_MONTH') {
         model.timeFilter.rangeFrom = socketReq.query.rangeFrom;
         model.timeFilter.rangeTo = socketReq.query.rangeTo;
+        model.timeFilter.type = 'CUSTOM_RANGE';
       }
   }
 
