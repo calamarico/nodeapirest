@@ -226,6 +226,22 @@ function _getHostStatus(sID, id, deferred) {
 }
 
 /**
+ * Filters host detail object module status fields.
+ * @param {Object} item - Host detail item.
+ * @return {Object} item - Item filtered.
+ */
+function _filterModulesStatus(item) {
+  item.overallAntiMalwareStatus = item.overallAntiMalwareStatus.split(':')[1].substr(1);
+  item.overallDpiStatus = item.overallDpiStatus.split(':')[1].substr(1);
+  item.overallFirewallStatus = item.overallFirewallStatus.split(':')[1].substr(1);
+  item.overallIntegrityMonitoringStatus = item.overallIntegrityMonitoringStatus.split(':')[1].substr(1);
+  item.overallLogInspectionStatus = item.overallLogInspectionStatus.split(':')[1].substr(1);
+  item.overallWebReputationStatus = item.overallWebReputationStatus.split(':')[1].substr(1);
+
+  return item;
+}
+
+/**
  * Get Computer Hosts Detail using hostDetailRetrieveByName SOAP method.
  * @param {Object} socketReq - Socket Request.
  * @param {Object} socketRes - Socket Response.
@@ -256,8 +272,8 @@ exports.getComputerHostsDetail = function(socketReq, socketRes, next) {
         result && logClientSoapRequest(result);
         _getHostStatus(model.sID, socketReq.query.hostID, deferred);
         deferred.promise.then(function(_result) {
-          socketRes.json([extend(
-            result.hostDetailRetrieveReturn[0], _result.hostGetStatusReturn)]);
+          socketRes.json([_filterModulesStatus(extend(
+            result.hostDetailRetrieveReturn[0], _result.hostGetStatusReturn))]);
         });
       });
   });
