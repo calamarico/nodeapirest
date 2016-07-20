@@ -496,6 +496,11 @@ exports.systemEventRetrieve = function(socketReq, socketRes, next) {
     }
   };
 
+  if (socketReq.query.hostID) {
+    model.hostFilter.type = 'SPECIFIC_HOST';
+    model.hostFilter.hostID = socketReq.query.hostID;
+  }
+
   if (socketReq.query.period) {
       model.timeFilter = {
         type: socketReq.query.period
